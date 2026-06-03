@@ -2,7 +2,8 @@
 export const API_URL =
   process.env.NODE_ENV === "test"
     ? "http://mock-api.com"
-    : import.meta.env.VITE_API_POSTS_URL; // || 'http://localhost:3000/api/v1/posts';
+    : import.meta.env.VITE_API_POSTS_URL ||
+      "http://localhost:3000/api/v1/posts";
 
 export const SEARCH_API_URL =
   process.env.NODE_ENV === "test"

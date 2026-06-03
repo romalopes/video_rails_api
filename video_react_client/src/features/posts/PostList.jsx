@@ -1,8 +1,9 @@
 import React, { useState, useEffect, use } from "react";
-import { API_URL } from "../../constants";
+import { API_URL } from "../../constants.js";
 import { postData } from "../../data/postData.js";
 
 function PostList() {
+  // const [posts, setPosts] = useState(postData); // Initialize with mock data
   const [posts, setPosts] = useState([]); // Initialize with mock data
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

@@ -11,6 +11,7 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts/1
   def show
+    sleep 1 # Simulate a slow response for testing loading states in the frontend
     render json: @post
   end
 
