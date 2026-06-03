@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_9KMS2dk8YtJDMOG7bbmaW167jxsn",
+  "orgId": "team_tTHHYVqzuFDAlMFvLAecMYII",
+  "projectName": "video-react-client",
+  "settings": {
+    "createdAt": 1780480420280,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
