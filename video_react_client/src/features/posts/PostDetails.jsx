@@ -81,6 +81,36 @@ function PostDetails() {
     );
   }
 
+  // function deletePost(id) {
+  //   if (window.confirm("Are you sure you want to delete this post?")) {
+  //     fetch(`${API_URL}/${id}`, {
+  //       method: "DELETE",
+  //     })
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error(`HTTP error! status: ${response.status}`);
+  //         }
+  //         navigate("/");
+  //       })
+  //       .catch((err) => alert(`Failed to delete post: ${err.message}`));
+  //   }
+  // }
+
+  const deletePost = (id) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          navigate("/");
+        })
+        .catch((err) => alert(`Failed to delete post: ${err.message}`));
+    }
+  };
+
   return (
     <article className="post-detail">
       <div className="detail-hero">
@@ -108,6 +138,9 @@ function PostDetails() {
         <Link className="button button-primary" to={`/posts/${id}/edit`}>
           Edit Post
         </Link>
+        <button className="button button-danger" onClick={() => deletePost(id)}>
+          Delete Post
+        </button>
       </div>
     </article>
   );
