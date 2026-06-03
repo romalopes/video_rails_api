@@ -11,6 +11,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       # origins "example.com"
       # origins "*"
       origins "http://localhost:5173"
+      origins Rails.env.development? ? "http://localhost:5173" : "https://video-react-client.vercel.app"
 
     resource "*",
       headers: :any,

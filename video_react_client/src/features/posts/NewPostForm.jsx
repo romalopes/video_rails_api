@@ -52,7 +52,7 @@ function NewPostForm() {
 
         <form onSubmit={handleSubmit} className="post-form">
           <label htmlFor="title">
-            Title
+            Title - {API_URL}
             <input
               htmlFor="title"
               type="text"
