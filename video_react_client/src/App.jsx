@@ -4,16 +4,27 @@ import viteLogo from "./assets/vite.svg";
 import heroImg from "./assets/hero.png";
 import "./App.css";
 import PostList from "./features/posts/PostList";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import AppRoutes from "./components/AppRoutes";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="App">
-      <h1>Video React Client</h1>
-      <p>React client from Video Rails API</p>
-      <PostList />
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Video React Client</h1>
+        <p>React client from Video Rails API</p>
+        <Navbar />
+        <AppRoutes />
+      </div>
+    </Router>
+    // <div className="App">
+    //   <h1>Video React Client</h1>
+    //   <p>React client from Video Rails API</p>
+    //   <PostList />
+    // </div>
   );
   // return (
   //   <>

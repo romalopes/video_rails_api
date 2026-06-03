@@ -42,5 +42,21 @@ Vercel
 ```bash
 pnpm install -g vercel
 vercel login
-vercelv
+vercel
+```
+
+```bash
+pnpm install react-router-dom
+```
+
+In `App.jsx`
+
+```js
+<Router>
+  <div className="App">
+    <h1>Video React Client</h1>
+    <p>React client from Video Rails API</p>
+    <PostList />
+  </div>
+</Router>
 ```
