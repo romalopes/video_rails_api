@@ -14,15 +14,15 @@ Post.destroy_all
 
 5.times do |i|
   Post.create!(
-    title: "Post #{i + 1}",
-    body: "This is the content of post number #{i + 1}."
+    title: "Roma - Post #{i + 1}",
+    body: "roma - This is the content of post number #{i + 1}."
   )
 end
 
 20.times do |i|
   Post.create!(
-    title: Faker::Lorem.sentence(word_count: 3),
-    body: Faker::Lorem.sentence(word_count: 10)
+    title: "#{i + 1} - #{Faker::Lorem.sentence(word_count: 3)} ",
+    body: "Roma - #{Faker::Lorem.paragraph(sentence_count: 5)}"
   )
 end
 

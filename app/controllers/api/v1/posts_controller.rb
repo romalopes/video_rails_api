@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: %i[ show update destroy ]
 
   # GET /posts
@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
+    sleep 1 # Simulate a slow response for testing loading states in the frontend
     render json: @post
   end
 

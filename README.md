@@ -101,6 +101,41 @@ Testing controller:
   end
 ```
 
+Run test and the api server.
+
 ```bash
 rails test
+
+rails s
+
+```
+
+In Browser
+
+```browser
+http://127.0.0.1:3000/posts
+```
+
+Change the routers.rb to /api/v1
+
+```ruby
+namespace :api do
+    namespace :v1 do
+      resources :posts
+    end
+  end
+```
+
+Also, create 'api/v1' put the controller there and change it:
+
+```rb
+class Api::V1::PostsController < ApplicationController
+```
+
+Now:
+
+```browser
+http://127.0.0.1:3000/api/v1/posts
+
+http://127.0.0.1:3000/api/v1/posts/1
 ```
