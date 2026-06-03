@@ -1,12 +1,12 @@
 // export const API_URL = import.meta.env.VITE_API_POSTS_URL || 'http://localhost:3000/api/v1/posts';
 export const API_URL =
-  process.env.NODE_ENV === "test"
+  import.meta.env.MODE === "test"
     ? "http://mock-api.com"
     : import.meta.env.VITE_API_POSTS_URL ||
       "http://localhost:3000/api/v1/posts";
 
 export const SEARCH_API_URL =
-  process.env.NODE_ENV === "test"
+  import.meta.env.MODE === "test"
     ? "http://mocked-api-url"
     : import.meta.env.VITE_SEARCH_API_URL;
 

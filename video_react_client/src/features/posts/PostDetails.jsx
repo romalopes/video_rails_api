@@ -1,6 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../../constants.js";
+
+function getPostBody(post) {
+  return post.body || post.content || "No description has been added yet.";
+}
+
+function formatDate(value) {
+  if (!value) return "Draft";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(value));
+}
 
 function PostDetails() {
   const { id } = useParams();
@@ -10,16 +24,15 @@ function PostDetails() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch post details from the API using the id from the URL
     const fetchPostDetails = async () => {
       try {
         setLoading(true);
+        setError(null);
         const response = await fetch(`${API_URL}/${id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Post details:", data);
         setPost(data);
       } catch (err) {
         setError(err.message);
@@ -32,29 +45,71 @@ function PostDetails() {
   }, [id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <section className="page-stack">
+        <div className="status-panel">
+          <span className="loader" aria-hidden="true" />
+          <p>Loading post...</p>
+        </div>
+      </section>
+    );
   }
 
   if (error) {
     return (
-      <p>
-        Error: {error}{" "}
-        <button onClick={() => navigate("/")}>Back to Post List</button>
-      </p>
+      <section className="page-stack">
+        <div className="status-panel status-panel-error">
+          <p>Error: {error}</p>
+          <button className="button" onClick={() => navigate("/")}>
+            Back to Library
+          </button>
+        </div>
+      </section>
     );
   }
 
   if (!post) {
-    return <p>Post not found</p>;
+    return (
+      <section className="page-stack">
+        <div className="empty-state">
+          <h1>Post not found</h1>
+          <Link className="button button-primary" to="/">
+            Back to Library
+          </Link>
+        </div>
+      </section>
+    );
   }
 
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
-      <Link to={`/posts/${id}/edit`}>Edit Post</Link>
-      <button onClick={() => navigate("/")}>Back to Post List</button>
-    </div>
+    <article className="post-detail">
+      <div className="detail-hero">
+        <div className="detail-media" aria-hidden="true">
+          <span>#{post.id}</span>
+        </div>
+        <div className="detail-copy">
+          <p className="eyebrow">Post {post.id}</p>
+          <h1>{post.title}</h1>
+          <div className="post-meta">
+            <span>Published {formatDate(post.created_at)}</span>
+            <span>Updated {formatDate(post.updated_at)}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="detail-body">
+        <p>{getPostBody(post)}</p>
+      </div>
+
+      <div className="detail-actions">
+        <button className="button" onClick={() => navigate("/")}>
+          Back to Library
+        </button>
+        <Link className="button button-primary" to={`/posts/${id}/edit`}>
+          Edit Post
+        </Link>
+      </div>
+    </article>
   );
 }
 

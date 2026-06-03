@@ -1,12 +1,26 @@
-// Post list link | Post new
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
   return (
-    <nav>
-      <Link to="/">Post List</Link>
-      {"|"}
-      <Link to="/new">New Post</Link>
+    <nav className="top-nav" aria-label="Primary navigation">
+      <NavLink className="brand" to="/">
+        <span className="brand-mark" aria-hidden="true">
+          V
+        </span>
+        <span>
+          <strong>Video Journal</strong>
+          <small>Rails API client</small>
+        </span>
+      </NavLink>
+
+      <div className="nav-actions">
+        <NavLink to="/" end>
+          Library
+        </NavLink>
+        <NavLink className="button button-primary" to="/new">
+          New Post
+        </NavLink>
+      </div>
     </nav>
   );
 }
