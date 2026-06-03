@@ -1,11 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { API_URL } from "../../constants";
-import { postData } from "../../data/PostData";
+import { postData } from "../../data/postData.js";
 
 function PostList() {
-  const [posts, setPosts] = useState(postData); // Initialize with mock data
+  const [posts, setPosts] = useState([]); // Initialize with mock data
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  //   useEffect(() => {
+  //     async function fetchPosts() {
+  //       setLoading(true);
+  //       try {
+  //         const response = await fetch(API_URL);
+  //         if (!response.ok) {
+  //           throw new Error(`HTTP error! status: ${response.status}`);
+  //         }
+  //         const data = await response.json();
+  //         setPosts(data);
+  //       } catch (err) {
+  //         setError(err.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //     fetchPosts();
+  //   }, []);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log("API_URL:", API_URL);
+        console.log("Response:", response);
+        const data = await response.json();
+        setPosts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
   return (
     // Fetch posts from the API and display them here
 

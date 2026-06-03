@@ -39,8 +39,8 @@ pnpm run dev
 
 Vercel
 
-```
+```bash
 pnpm install -g vercel
 vercel login
-vercel
+vercelv
 ```
