@@ -46,22 +46,41 @@ function PostList() {
     fetchPosts();
   }, []);
 
-  const deletePost = (id) => {
+  const deletePost = async (id) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
-      fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          // navigate("/");
-          // setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-          setPosts(posts.filter((post) => post.id !== id));
-        })
-        .catch((err) => alert(`Failed to delete post: ${err.message}`));
+      try {
+        const response = await fetch(`${API_URL}/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+        setPosts(posts.filter((post) => post.id !== id));
+      } catch (err) {
+        alert(`Failed to delete post: ${err.message}`);
+      }
     }
   };
+
+  // const deletePost = (id) => {
+  //   if (window.confirm("Are you sure you want to delete this post?")) {
+  //     fetch(`${API_URL}/${id}`, {
+  //       method: "DELETE",
+  //     })
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error(`HTTP error! status: ${response.status}`);
+  //         }
+  //         // navigate("/");
+  //         // setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  //         setPosts(posts.filter((post) => post.id !== id));
+  //       })
+  //       .catch((err) => alert(`Failed to delete post: ${err.message}`));
+  //   }
+  // };
 
   const latestPost = posts[0];
 
