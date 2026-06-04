@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../../constants.js";
+import { useNavigate } from "react-router-dom";
 
 function getPostBody(post) {
   return post.body || post.content || "No description has been added yet.";
@@ -20,6 +21,7 @@ function PostList() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,6 +45,23 @@ function PostList() {
 
     fetchPosts();
   }, []);
+
+  const deletePost = (id) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          // navigate("/");
+          // setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+          setPosts(posts.filter((post) => post.id !== id));
+        })
+        .catch((err) => alert(`Failed to delete post: ${err.message}`));
+    }
+  };
 
   const latestPost = posts[0];
 
@@ -105,19 +124,31 @@ function PostList() {
 
           <div className="post-grid">
             {posts.map((post) => (
-              <Link key={post.id} className="post-card" to={`/posts/${post.id}`}>
-                <div className="post-card-media" aria-hidden="true">
-                  <span>#{post.id}</span>
-                </div>
-                <div className="post-card-body">
-                  <div className="post-meta">
-                    <span>{formatDate(post.created_at)}</span>
-                    <span>Post {post.id}</span>
+              <div key={post.id} className="post-card-wrapper">
+                <Link
+                  key={post.id}
+                  className="post-card"
+                  to={`/posts/${post.id}`}
+                >
+                  <div className="post-card-media" aria-hidden="true">
+                    <span>#{post.id}</span>
                   </div>
-                  <h3>{post.title}</h3>
-                  <p>{getPostBody(post)}</p>
-                </div>
-              </Link>
+                  <div className="post-card-body">
+                    <div className="post-meta">
+                      <span>{formatDate(post.created_at)}</span>
+                      <span>Post {post.id}</span>
+                    </div>
+                    <h3>{post.title}</h3>
+                    <p>{getPostBody(post)}</p>
+                  </div>
+                </Link>
+                <button
+                  className="button button-danger"
+                  onClick={() => deletePost(post.id)}
+                >
+                  Delete Post
+                </button>
+              </div>
             ))}
           </div>
         </>
