@@ -129,7 +129,10 @@
   border-radius: 8px;
   box-sizing: border-box;
   cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .button:hover:not(:disabled) {
@@ -147,6 +150,12 @@
   color: #ffffff;
   background: #1f6feb;
   border-color: #1f6feb;
+}
+
+.button-danger {
+  color: #ffffff;
+  background: #991b1b;
+  border-color: #991b1b;
 }
 
 .featured-post {
@@ -240,7 +249,10 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .post-card:hover {

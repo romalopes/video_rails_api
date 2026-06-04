@@ -9,9 +9,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
       # where your requests come from eg. your react app IP address or URL
       # origins "example.com"
-      # origins "*"
-      origins "http://localhost:5173"
-      origins Rails.env.development? ? "http://localhost:5173" : "https://video-react-client.vercel.app"
+      origins "*"
+    # origins "http://localhost:5173"
+    # origins Rails.env.development? ? "http://localhost:5173" : "https://video-react-client.vercel.app"
 
     resource "*",
       headers: :any,
