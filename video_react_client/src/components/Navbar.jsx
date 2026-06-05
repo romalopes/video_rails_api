@@ -14,6 +14,9 @@ function NavBar() {
       </NavLink>
 
       <div className="nav-actions">
+        <NavLink to="/loginSignup">Login/Signup</NavLink>
+        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/signup">Sign up</NavLink>
         <NavLink to="/" end>
           Library
         </NavLink>

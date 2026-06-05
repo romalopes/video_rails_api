@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../../constants.js";
 import { useNavigate } from "react-router-dom";
+import { deletePost1, fetchAllPosts } from "../../services/postServices.jsx";
 
 function getPostBody(post) {
   return post.body || post.content || "No description has been added yet.";
@@ -29,13 +30,15 @@ function PostList() {
       setError(null);
 
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const data = await fetchAllPosts();
         setPosts(data);
+        // const response = await fetch(API_URL);
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! status: ${response.status}`);
+        // }
+
+        // const data = await response.json();
+        // setPosts(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -49,13 +52,14 @@ function PostList() {
   const deletePost = async (id) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: "DELETE",
-        });
+        await deletePost1(id);
+        // const response = await fetch(`${API_URL}/${id}`, {
+        //   method: "DELETE",
+        // });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! status: ${response.status}`);
+        // }
 
         // setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
         setPosts(posts.filter((post) => post.id !== id));
