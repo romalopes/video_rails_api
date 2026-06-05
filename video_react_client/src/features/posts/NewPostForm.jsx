@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { API_URL } from "../../constants.js";
 import { useNavigate } from "react-router-dom";
+import { createPost } from "../../services/postServices.jsx";
 
 function NewPostForm() {
   const [title, setTitle] = useState("");
@@ -18,22 +19,27 @@ function NewPostForm() {
 
     const postData = { title, body };
     try {
-      const response = await fetch(`${API_URL}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-        // body: JSON.stringify({ title, body }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      //   if (response.ok) {
-      const data = await response.json();
+      const data = await createPost(postData);
+      // const data = await response.json();
       console.log("Created post:", data);
       navigate(`/posts/${data.id}`);
+
+      // const response = await fetch(`${API_URL}`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(postData),
+      //   // body: JSON.stringify({ title, body }),
+      // });
+
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // }
+      // //   if (response.ok) {
+      // const data = await response.json();
+      // console.log("Created post:", data);
+      // navigate(`/posts/${data.id}`);
       //   }
     } catch (err) {
       setError(err.message);
