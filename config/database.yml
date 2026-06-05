@@ -12,7 +12,8 @@ default: &default # adapter: sqlite3
 development:
   <<: *default
   # database: postgresql://neondb_owner:npg_LICRbU94tcBl@ep-morning-bird-a7hdva7u.ap-southeast-2.aws.neon.tech/neondb
-  development:
+  # development:
+
   adapter: postgresql
   host: localhost
   database: video_rails_api_development
@@ -41,7 +42,7 @@ production:
     <<: *default
     # database: storage/production.sqlite3
     url: <%= ENV["DATABASE_URL"] %>
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+    # pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   # cache:
   #   <<: *default
   #   database: storage/production_cache.sqlite3
