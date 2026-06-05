@@ -15,8 +15,28 @@ async function fetchAllPosts() {
   }
 }
 
+async function editPost(id, postData) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    throw new Error(`Failed to edit post: ${err.message}`);
+  }
+}
+
 // const deletePost = async (id) => {
-async function deletePost1(id) {
+async function fetchDeletePost(id) {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "DELETE",
@@ -46,4 +66,4 @@ async function deletePost1(id) {
 //   }
 // }
 
-export { fetchAllPosts, deletePost1 };
+export { fetchAllPosts, fetchDeletePost, editPost };

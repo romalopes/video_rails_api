@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../../constants.js";
 import { useNavigate } from "react-router-dom";
-import { deletePost1, fetchAllPosts } from "../../services/postServices.jsx";
+import {
+  fetchDeletePost,
+  fetchAllPosts,
+} from "../../services/postServices.jsx";
 
 function getPostBody(post) {
   return post.body || post.content || "No description has been added yet.";
@@ -52,7 +55,7 @@ function PostList() {
   const deletePost = async (id) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        await deletePost1(id);
+        await fetchDeletePost(id);
         // const response = await fetch(`${API_URL}/${id}`, {
         //   method: "DELETE",
         // });
