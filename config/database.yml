@@ -39,8 +39,8 @@ test:
 production:
   primary:
     <<: *default
-    # database: storage/production.sqlite3
-    database: postgresql://neondb_owner:npg_LICRbU94tcBl@ep-morning-bird-a7hdva7u.ap-southeast-2.aws.neon.tech/neondb
+    database: storage/production.sqlite3
+    # database: postgresql://neondb_owner:npg_LICRbU94tcBl@ep-morning-bird-a7hdva7u.ap-southeast-2.aws.neon.tech/neondb
   # cache:
   #   <<: *default
   #   database: storage/production_cache.sqlite3
