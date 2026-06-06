@@ -5,9 +5,9 @@ import NewPostForm from "../features/posts/NewPostForm";
 import EditPostForm from "../features/posts/EditPostForm";
 import LoginForm from "../features/auth/LoginForm";
 import SignupForm from "../features/auth/SignupForm";
-import LoginSignupForm from "../features/auth/LoginSignupForm";
+// import LoginSignupForm from "../features/auth/LoginSignupForm";
 
-function AppRoutes() {
+function AppRoutes({ user, setUser }) {
   return (
     <>
       <Routes>
@@ -15,10 +15,11 @@ function AppRoutes() {
         <Route path="/posts/:id" element={<PostDetails />} />
         <Route path="/posts/:id/edit" element={<EditPostForm />} />
         <Route path="/new" element={<NewPostForm />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/loginSignup" element={<LoginSignupForm />} />
-        <Route path="/signup" element={<SignupForm />} />
-        {/* <Route path="/new" element={<h1>New Post</h1>} /> */}
+        <Route
+          path="/login"
+          element={<LoginForm user={user} setUser={setUser} />}
+        />
+        <Route path="/new" element={<h1>New Post</h1>} />
       </Routes>
     </>
   );
