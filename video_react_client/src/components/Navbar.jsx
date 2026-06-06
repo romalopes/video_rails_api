@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
+// import { useState, useEffect } from "react";
+import ShowLogin from "./ShowLogin.jsx";
 
-function NavBar() {
+function NavBar({ user, setUser, onLogin }) {
   return (
     <nav className="top-nav" aria-label="Primary navigation">
       <NavLink className="brand" to="/">
         <span className="brand-mark" aria-hidden="true">
-          V
+          R
         </span>
         <span>
           <strong>Video Journal</strong>
@@ -14,9 +16,9 @@ function NavBar() {
       </NavLink>
 
       <div className="nav-actions">
-        <NavLink to="/loginSignup">Login/Signup</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/signup">Sign up</NavLink>
+        {/* <NavLink to="/loginSignup">Login/Signup</NavLink> */}
+        <ShowLogin user={user} onLogin={onLogin} setUser={setUser} />
+
         <NavLink to="/" end>
           Library
         </NavLink>
