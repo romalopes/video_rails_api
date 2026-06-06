@@ -15,7 +15,20 @@ async function fetchAllPosts() {
   }
 }
 
-async function editPost(id, postData) {
+async function fetchPostDetails(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(`Failed to fetch post details: ${err.message}`);
+  }
+}
+
+async function updatePost(id, postData) {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
@@ -66,4 +79,29 @@ async function fetchDeletePost(id) {
 //   }
 // }
 
-export { fetchAllPosts, fetchDeletePost, editPost };
+async function createPost(postData) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    throw new Error(`Failed to create post: ${err.message}`);
+  }
+}
+export {
+  fetchPostDetails,
+  createPost,
+  fetchAllPosts,
+  fetchDeletePost,
+  updatePost,
+};

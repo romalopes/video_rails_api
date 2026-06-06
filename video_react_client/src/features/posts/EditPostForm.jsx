@@ -2,23 +2,23 @@ import { Link, useParams } from "react-router-dom";
 import { API_URL } from "../../constants.js";
 import React from "react";
 import { useEffect, useState } from "react";
+import { updatePost, fetchPostDetails } from "../../services/postServices.jsx";
+import { useNavigate } from "react-router-dom";
 
 function EditPostForm() {
   const [post, setPost] = React.useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
   const postUrl = `${API_URL}/${id}`;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
+
     const fechCurrentPost = async () => {
       try {
-        const response = await fetch(postUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchPostDetails(id);
         setPost(data);
       } catch (err) {
         setError(err.message);
@@ -29,13 +29,6 @@ function EditPostForm() {
     fechCurrentPost();
   }, [id]);
 
-  //   fetch(postUrl)
-  //     .then((response) => response.json())
-  //     .then((data) => setPost(data))
-  //     .catch((err) => setError(err.message))
-  //     .finally(() => setLoading(false));
-  // }, [postUrl]);
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -44,17 +37,15 @@ function EditPostForm() {
     return <p>Error: {error}</p>;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(postUrl, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    try {
+      const data = await updatePost(id, post);
+      console.log("Updated post:", data);
+      navigate(`/posts/${data.id}`);
+    } catch (err) {
+      console.error("Error updating post:", err);
+    }
   };
 
   return (
