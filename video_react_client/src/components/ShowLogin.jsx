@@ -25,7 +25,7 @@ function ShowLogin({ user, setUser }) {
     return (
       <>
         <span>Logged in as {user.email}</span>
-        <button onClick={handleSignOut}>Sign Out</button>
+        <button className="button button-primary" onClick={handleSignOut}>Sign Out</button>
       </>
     );
   }

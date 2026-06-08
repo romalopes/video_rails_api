@@ -6,7 +6,8 @@ export default function LoginForm({ user, setUser }) {
   // const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [error, setError] = useState("");
   // const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
@@ -21,24 +22,36 @@ export default function LoginForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = isSignUp
-      ? await authClient.signUp.email({
-          name: email.split("@")[0] || "User",
-          email,
-          password,
-        })
-      : await authClient.signIn.email({ email, password });
+    try {
+      const result = isSignUp
+        ? await authClient.signUp.email({
+            name: email.split("@")[0] || "User",
+            email,
+            password,
+          })
+        : await authClient.signIn.email({ email, password });
 
-    if (result.error) {
-      alert(result.error.message);
+      // if (result.data?.session && result.data?.user) {
+      //   // setSession(result.data.session);
+      //   setUser(result.data.user);
+      // }
+
+      if (result.error) {
+        setError(result.error.message);
+        alert(result.error.message);
+        return;
+      }
+
+      const sessionResult = await authClient.getSession();
+      if (sessionResult.data?.session && sessionResult.data?.user) {
+        // onLogin(sessionResult.data);
+        // setSession(sessionResult.data.session);
+        setUser(sessionResult.data.user);
+      }
+    } catch (err) {
+      setError(err.message);
+      alert(err.message);
       return;
-    }
-
-    const sessionResult = await authClient.getSession();
-    if (sessionResult.data?.session && sessionResult.data?.user) {
-      // onLogin(sessionResult.data);
-      // setSession(sessionResult.data.session);
-      setUser(sessionResult.data.user);
     }
   };
 
@@ -82,7 +95,10 @@ export default function LoginForm({ user, setUser }) {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</button>
+      <button type="submit" className="button button-primary">
+        {isSignUp ? "Sign Up" : "Sign In"}
+      </button>
+      {error && <p>{error}</p>}
       <p>
         {isSignUp ? (
           <>
@@ -114,42 +130,4 @@ export default function LoginForm({ user, setUser }) {
       </p>
     </form>
   );
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await authClient.signIn.email({ email, password });
-  //   } catch (err) {
-  //     setError(err.message);
-  //     return;
-  //   }
-  // };
-
-  // return (
-  //   <div className="login-page">
-  //     <h1>Login</h1>
-  //     <form onSubmit={handleSubmit}>
-  //       <input
-  //         type="email"
-  //         placeholder="Email"
-  //         value={email}
-  //         onChange={(e) => setEmail(e.target.value)}
-  //         required
-  //       />
-  //       <input
-  //         type="password"
-  //         placeholder="Password"
-  //         value={password}
-  //         onChange={(e) => setPassword(e.target.value)}
-  //         required
-  //       />
-  //       <button type="submit">Sign In</button>
-  //       {error && <p style={{ color: "red" }}>{error}</p>}
-  //     </form>
-  //   </div>
-  // );
 }
