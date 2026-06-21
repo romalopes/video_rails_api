@@ -4,6 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { updatePost, fetchPostDetails } from "../../services/postServices.jsx";
 import { useNavigate } from "react-router-dom";
+import PostForm from "./PostForm.jsx";
 
 function EditPostForm() {
   const [post, setPost] = React.useState(null);
@@ -37,10 +38,9 @@ function EditPostForm() {
     return <p>Error: {error}</p>;
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleUpdateSubmit = async (formData) => {
     try {
-      const data = await updatePost(id, post);
+      const data = await updatePost(id, formData);
       console.log("Updated post:", data);
       navigate(`/posts/${data.id}`);
     } catch (err) {
@@ -49,49 +49,55 @@ function EditPostForm() {
   };
 
   return (
-    <section className="form-shell">
-      <div className="form-panel">
-        <p className="eyebrow">Edit post {id}</p>
-        <h1>Edit Post</h1>
-        <p className="page-subtitle">
-          This route is ready for the Rails update flow.
-        </p>
+    <PostForm
+      post={post}
+      id={id}
+      onSubmit={handleUpdateSubmit}
+      buttonText="Save Changes"
+    />
+    // <section className="form-shell">
+    //   <div className="form-panel">
+    //     <p className="eyebrow">Edit post {id}</p>
+    //     <h1>Edit Post</h1>
+    //     <p className="page-subtitle">
+    //       This route is ready for the Rails update flow.
+    //     </p>
 
-        <form className="post-form">
-          <label>
-            Title
-            <input
-              type="text"
-              placeholder="Post title"
-              value={post?.title || ""}
-              onChange={(e) => setPost({ ...post, title: e.target.value })}
-            />
-          </label>
-          <label>
-            Body
-            <textarea
-              placeholder="Post body"
-              rows="6"
-              value={post?.body || ""}
-              onChange={(e) => setPost({ ...post, body: e.target.value })}
-            />
-          </label>
-          <div className="form-actions">
-            <Link className="button" to={`/posts/${id}`}>
-              Cancel
-            </Link>
-            <button
-              className="button button-primary"
-              type="submit"
-              disabled={!post?.title}
-              onClick={handleSubmit}
-            >
-              Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
+    //     <form className="post-form">
+    //       <label>
+    //         Title
+    //         <input
+    //           type="text"
+    //           placeholder="Post title"
+    //           value={post?.title || ""}
+    //           onChange={(e) => setPost({ ...post, title: e.target.value })}
+    //         />
+    //       </label>
+    //       <label>
+    //         Body
+    //         <textarea
+    //           placeholder="Post body"
+    //           rows="6"
+    //           value={post?.body || ""}
+    //           onChange={(e) => setPost({ ...post, body: e.target.value })}
+    //         />
+    //       </label>
+    //       <div className="form-actions">
+    //         <Link className="button" to={`/posts/${id}`}>
+    //           Cancel
+    //         </Link>
+    //         <button
+    //           className="button button-primary"
+    //           type="submit"
+    //           disabled={!post?.title}
+    //           onClick={handleSubmit}
+    //         >
+    //           Save Changes
+    //         </button>
+    //       </div>
+    //     </form>
+    //   </div>
+    // </section>
   );
 }
 
