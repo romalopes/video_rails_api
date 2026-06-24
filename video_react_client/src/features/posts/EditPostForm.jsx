@@ -52,6 +52,7 @@ function EditPostForm() {
     <PostForm
       post={post}
       id={id}
+      headerText="Edit Post"
       onSubmit={handleUpdateSubmit}
       buttonText="Save Changes"
     />
