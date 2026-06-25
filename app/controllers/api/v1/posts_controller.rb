@@ -4,14 +4,28 @@ class Api::V1::PostsController < ApplicationController
   # GET /posts
   def index
     # @posts = Post.all(order: :created_at.desc)
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.order(created_at: :desc)
 
-    render json: @posts
+    post_with_images = @posts.map do |post|
+      if post.image.attached?
+        # post.image_url = url_for(post.image)
+        post.as_json.merge(image_url: url_for(post.image))
+      else
+        post.as_json.merge(image_url: nil)
+      end
+      # post
+    end
+    render json: post_with_images
   end
 
   # GET /posts/1
   def show
-    sleep 1 # Simulate a slow response for testing loading states in the frontend
+    # sleep 1 # Simulate a slow response for testing loading states in the frontend
+    if @post.image.attached?
+      @post = @post.as_json.merge(image_url: url_for(@post.image))
+    else
+      @post.as_json.merge(image_url: nil)
+    end
     render json: @post
   end
 
@@ -48,6 +62,6 @@ class Api::V1::PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body ])
+      params.expect(post: [ :title, :body, :image ])
     end
 end

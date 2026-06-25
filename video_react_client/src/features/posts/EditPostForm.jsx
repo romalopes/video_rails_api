@@ -38,8 +38,13 @@ function EditPostForm() {
     return <p>Error: {error}</p>;
   }
 
-  const handleUpdateSubmit = async (formData) => {
+  const handleUpdateSubmit = async (rawData) => {
     try {
+      const formData = new FormData();
+      formData.append("post[title]", rawData.title);
+      formData.append("post[body]", rawData.body);
+      formData.append("post[image]", rawData.image);
+
       const data = await updatePost(id, formData);
       console.log("Updated post:", data);
       navigate(`/posts/${data.id}`);

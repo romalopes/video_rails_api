@@ -8,6 +8,7 @@ function PostForm({ post, headerText, onSubmit, buttonText }) {
     post || {
       title: "",
       body: "",
+      image: "",
     },
   );
 
@@ -34,6 +35,19 @@ function PostForm({ post, headerText, onSubmit, buttonText }) {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
+            />
+          </label>
+          <label htmlFor="image">
+            Image
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              placeholder="Add a post image"
+              onChange={(e) => {
+                setFormData({ ...formData, image: e.target.files[0] });
+                console.log("file", e.target.files[0]);
+              }}
             />
           </label>
           <label htmlFor="body">
@@ -70,6 +84,7 @@ PostForm.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }),
   headerText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,

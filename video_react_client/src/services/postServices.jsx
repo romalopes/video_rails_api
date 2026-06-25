@@ -32,10 +32,11 @@ async function updatePost(id, postData) {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      // body: JSON.stringify(postData),
+      body: postData,
     });
 
     if (!response.ok) {
@@ -80,13 +81,15 @@ async function fetchDeletePost(id) {
 // }
 
 async function createPost(postData) {
+  console.log("postData", JSON.stringify(postData));
+  console.log("postData", postData);
   try {
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      body: postData,
     });
 
     if (!response.ok) {
