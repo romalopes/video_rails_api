@@ -133,9 +133,7 @@ function PostList() {
         <>
           <Link className="featured-post" to={`/posts/${latestPost.id}`}>
             <div className="featured-media" aria-hidden="true">
-              <p>
-                {/* <img src={latestPost.image_url} alt={latestPost.title} /> */}
-              </p>
+              <img src={latestPost.image_url} alt={latestPost.title} />
               <span>#{latestPost.id}</span>
             </div>
             <div className="featured-content">
