@@ -3,16 +3,13 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts
   def index
-    # @posts = Post.all(order: :created_at.desc)
-    @posts = Post.all.order(created_at: :desc)
-
-    render json: @posts
+    @posts = Post.order(created_at: :desc)
+    render json: @posts.as_json
   end
 
   # GET /posts/1
   def show
-    sleep 1 # Simulate a slow response for testing loading states in the frontend
-    render json: @post
+    render json: @post.as_json
   end
 
   # POST /posts
@@ -20,7 +17,7 @@ class Api::V1::PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      render json: @post, status: :created, location: api_v1_post_url(@post.id) # location: @post
+      render json: @post, status: :created, location: api_v1_post_url(@post.id)
     else
       render json: @post.errors, status: :unprocessable_content
     end
@@ -48,6 +45,6 @@ class Api::V1::PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body ])
+      params.expect(post: [ :title, :body, :image ])
     end
 end

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { API_URL } from "../../constants.js";
 
 function getPostBody(post) {
+  console.log(post.image_url);
   return post.body || post.content || "No description has been added yet.";
 }
 
@@ -115,6 +116,7 @@ function PostDetails() {
     <article className="post-detail">
       <div className="detail-hero">
         <div className="detail-media" aria-hidden="true">
+          <img src={post.image_url} alt={post.title} />
           <span>#{post.id}</span>
         </div>
         <div className="detail-copy">

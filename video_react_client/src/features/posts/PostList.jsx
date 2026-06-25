@@ -133,6 +133,7 @@ function PostList() {
         <>
           <Link className="featured-post" to={`/posts/${latestPost.id}`}>
             <div className="featured-media" aria-hidden="true">
+              <img src={latestPost.image_url} alt={latestPost.title} />
               <span>#{latestPost.id}</span>
             </div>
             <div className="featured-content">
@@ -157,6 +158,7 @@ function PostList() {
                   to={`/posts/${post.id}`}
                 >
                   <div className="post-card-media" aria-hidden="true">
+                    <img src={post.image_url} alt={post.title} />
                     <span>#{post.id}</span>
                   </div>
                   <div className="post-card-body">

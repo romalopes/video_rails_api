@@ -49,8 +49,16 @@ function NewPostForm() {
   //   }
   // };
 
-  const handleCreateSubmit = async (formData) => {
+  const handleCreateSubmit = async (rawData) => {
     // e.preventDefault();
+    // create the form data
+    console.log("rawData", rawData);
+    const formData = new FormData();
+    formData.append("post[title]", rawData.title);
+    formData.append("post[body]", rawData.body);
+    formData.append("post[image]", rawData.image);
+
+    console.log(formData);
     try {
       const data = await createPost(formData);
       navigate(`/posts/${data.id}`);
