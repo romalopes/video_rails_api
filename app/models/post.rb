@@ -1,5 +1,15 @@
 class Post < ApplicationRecord
   has_one_attached :image
+  # orders = { created_at: :desc }
+  validates :title, :body, presence: true
+
+  # scope :search, ->(param) { where("title LIKE ? or body LIKE ?", "%#{param}%", "%#{param}%").desc }
+  scope :desc, -> { order(created_at: :desc) }
+
+  def self.search(param)
+    where("title LIKE ? or body LIKE ?", "%#{param}%", "%#{param}%").desc
+  end
+
 
   # Returns the URL for the attached image, or nil if no image is attached.
   #
@@ -17,6 +27,8 @@ class Post < ApplicationRecord
   def as_json(options = {})
     super(options).merge("image_url" => image_url)
   end
+
+
 
   private
 
