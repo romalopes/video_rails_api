@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  get "search/posts"
   namespace :api do
     namespace :v1 do
       resources :posts
+      # resources :search, only: [ :posts ]
+      get "search/posts", to: "search#posts"
     end
   end
 

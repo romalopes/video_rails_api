@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../constants.js";
 
-async function fetchAllPosts() {
+async function fetchAllPosts(page) {
   try {
-    const response = await fetch(API_URL);
+    const pageNumber = page || 1;
+    const response = await fetch(`${API_URL}?page=${pageNumber}&per_page=10`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
